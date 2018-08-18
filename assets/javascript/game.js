@@ -7,7 +7,9 @@ $(document).ready(function () {
     return num;
   }
 
-  let fighters = [
+  $("#enemies").hide();
+
+  const fighters = [
     {
       name: 'Justin Trudeau',
       hp: rand(135, 90),
@@ -34,12 +36,12 @@ $(document).ready(function () {
     }
   ];
 
-  let trudeau = fighters[0].name;
-  let obama = fighters[1].name;
-  let macron = fighters[2].name;
-  let merkel = fighters[3].name;
+  const trudeau = fighters[0];
+  const obama = fighters[1];
+  const macron = fighters[2];
+  const merkel = fighters[3];
 
-  let enemies = [
+  const enemies = [
     {
       name: 'Donald Trump',
       hp: rand(135, 90),
@@ -66,10 +68,10 @@ $(document).ready(function () {
     }
   ];
 
-  let trump = enemies[0].name;
-  let putin = enemies[1].name;
-  let kim = enemies[2].name;
-  let hitler = enemies[3].name;
+  const trump = enemies[0];
+  const kim = enemies[1];
+  const putin = enemies[2];
+  const hitler = enemies[3];
 
   let getCharacter = function (x) {
     if (x === 'trump') {
@@ -80,25 +82,56 @@ $(document).ready(function () {
       return kim;
     } else if (x === 'hitler') {
       return hitler;
+    } else if (x === 'obama') {
+      return obama;
+    } else if (x === 'trudeau') {
+      return trudeau;
+    } else if (x === 'macron') {
+      return macron;
+    } else if (x === 'merkel') {
+      return merkel;
     }
   }
 
-  let selText = $('#selectText');
-  console.log(selText);
+  let selText = $('#fighterSelectText');
+
+  let currentFighter = {};
+  let currentEnemy = {};
 
   let selector = function () {
     let elmId = $(this).attr("id");
+    let char = getCharacter(elmId);
     if (selText.text() === 'Select Your Fighter') {
-      $("#fighterName").text(getCharacter(elmId));
-      $("#selectText").text('Select Your Enemy');
+      $("#fighterName").text(char.name);
+      $("#fighterSelectText").text('Select Your Enemy');
+      $("#fighters").hide();
+      $("#enemies").show();
+      currentFighter = char;
+      $("#fighterHP").text('Health = ' + currentFighter.hp);
     } else {
-      $("#enemyName").text(getCharacter(elmId));
-      $("#selectText").text('Select Your Enemy');
+      $("#enemyName").text(getCharacter(elmId).name);
+      currentEnemy = char;
+      $("#enemyHP").text('Health = ' + currentEnemy.hp);
     }
     $(this).empty();
   }
 
   $(document).on('click', '.char', selector);
+
+  let attack = function () {
+    console.log(currentEnemy);
+    console.log(currentFighter);
+    currentEnemy.hp = currentEnemy.hp - currentFighter.ap;
+    currentFighter.hp = currentFighter.hp - currentEnemy.cap;
+    console.log(currentEnemy);
+    console.log(currentFighter);
+    $("#fighterHP").text('Health = ' + currentFighter.hp);
+    $("#enemyHP").text('Health = ' + currentEnemy.hp);
+    currentFighter.ap += currentFighter.ap;
+    console.log(currentFighter.ap);
+  }
+
+  $(document).on('click', '#attackBtn', attack);
 
 })
 

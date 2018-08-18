@@ -18,11 +18,34 @@
 
 <body>
   <div class="jumbotron text-center">
-    <h1>World's Worst Leaders RPG</h1>
+    <h1>Destroy the World's Worst Leaders!</h1>
   </div>
   <div class="row text-center">
-    <div class="col-md-4">
-      <h2 id="selectText">Select Your Fighter</h2>
+    <div class="col-md-4" id="fighters">
+      <h2 id="fighterSelectText">Select Your Fighter</h2>
+      <div class="row">
+        <div class="col-md-6 char" id="trudeau">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Justin Trudeau</h5>
+        </div>
+        <div class="col-md-6 char" id="obama">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Barrack Obama</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 char" id="macron">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Emmanuel Macron</h5>
+        </div>
+        <div class="col-md-6 char" id="merkel">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Angela Merkel</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" id="enemies">
+      <h2 id="enemySelectText">Select Your Enemy</h2>
       <div class="row">
         <div class="col-md-6 char" id="trump">
           <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
@@ -54,8 +77,8 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2" id="attackBtn">
-      <button type="button" class="btn btn-danger">ATTACK!</button>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-danger" id="attackBtn">ATTACK!</button>
     </div>
     <div class="col-md-3" id="fighter">
       <h2>Your Enemy</h2>
