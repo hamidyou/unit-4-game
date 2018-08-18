@@ -12,27 +12,23 @@ $(document).ready(function () {
   const fighters = [
     {
       name: 'Justin Trudeau',
-      hp: rand(135, 90),
-      ap: rand(10, 2),
-      cap: rand(8, 1)
+      hp: rand(130, 100),
+      ap: rand(10, 1),
     },
     {
       name: 'Barrack Obama',
       hp: rand(150, 100),
       ap: rand(10, 2),
-      cap: rand(15, 5)
     },
     {
       name: 'Emmanuel Macron',
-      hp: rand(120, 90),
-      ap: rand(12, 2),
-      cap: rand(10, 1)
+      hp: rand(120, 100),
+      ap: rand(10, 2),
     },
     {
       name: 'Angela Merkel',
-      hp: rand(115, 90),
+      hp: rand(140, 100),
       ap: rand(10, 2),
-      cap: rand(8, 1)
     }
   ];
 
@@ -45,26 +41,22 @@ $(document).ready(function () {
     {
       name: 'Donald Trump',
       hp: rand(135, 90),
-      ap: rand(10, 2),
-      cap: rand(8, 1)
+      cap: rand(25, 1)
     },
     {
       name: 'Kim Jung-Un',
-      hp: rand(150, 100),
-      ap: rand(10, 2),
-      cap: rand(15, 5)
+      hp: rand(150, 90),
+      cap: rand(25, 1)
     },
     {
       name: 'Vladmir Putin',
       hp: rand(120, 90),
-      ap: rand(12, 2),
-      cap: rand(10, 1)
+      cap: rand(25, 1)
     },
     {
       name: 'Adolf Hitler',
       hp: rand(115, 90),
-      ap: rand(10, 2),
-      cap: rand(8, 1)
+      cap: rand(25, 1)
     }
   ];
 
@@ -116,22 +108,33 @@ $(document).ready(function () {
     $(this).empty();
   }
 
-  $(document).on('click', '.char', selector);
+  let attackNum = 1;
 
-  let attack = function () {
-    console.log(currentEnemy);
-    console.log(currentFighter);
-    currentEnemy.hp = currentEnemy.hp - currentFighter.ap;
-    currentFighter.hp = currentFighter.hp - currentEnemy.cap;
-    console.log(currentEnemy);
-    console.log(currentFighter);
-    $("#fighterHP").text('Health = ' + currentFighter.hp);
-    $("#enemyHP").text('Health = ' + currentEnemy.hp);
-    currentFighter.ap += currentFighter.ap;
-    console.log(currentFighter.ap);
+  let checkHealth = function (a) {
+    console.log('checkHealth is running');
+    console.log(a);
+    console.log('currentEnemy.hp = ' + a.hp)
+    if (a.hp <= 0) {
+      eDefeated(a);
+    }
   }
 
-  $(document).on('click', '#attackBtn', attack);
+  let eDefeated = function (b) {
+    $(".message").append('<strong>Congratulations! You have defeated ' + b.name + '.<br><br> Select your next enemy.<br><-----</strong>');
+  }
+
+  let attack = function () {
+    currentEnemy.hp = currentEnemy.hp - currentFighter.ap * attackNum;
+    currentFighter.hp = currentFighter.hp - currentEnemy.cap;
+    $("#fighterHP").text('Health = ' + currentFighter.hp);
+    $("#enemyHP").text('Health = ' + currentEnemy.hp);
+    attackNum++;
+    checkHealth(currentEnemy);
+  }
+
+  $(document).on('click', '.char', selector)
+
+    .on('click', '#attackBtn', attack);
 
 })
 
