@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Worst World Leaders RPG</title>
+
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <div class="jumbotron text-center">
+    <h1>World's Worst Leaders RPG</h1>
+  </div>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <h2 id="selectText">Select Your Fighter</h2>
+      <div class="row">
+        <div class="col-md-6 char" id="trump">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Donald Trump</h5>
+        </div>
+        <div class="col-md-6 char" id="putin">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Vladmir Putin</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 char" id="kim">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Kim Jung-Un</h5>
+        </div>
+        <div class="col-md-6 char" id="hitler">
+          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <h5>Adolf Hitler</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" id="fighter">
+      <h2>Your Fighter</h2>
+      <div class="row">
+        <div class="col p-5">
+          <img src="https://via.placeholder.com/250x250" class="img-thumbnail" id="fighterImage" />
+          <h5 id="fighterName">Placeholder Text</h5>
+          <p id="fighterHP">HP: </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2" id="attackBtn">
+      <button type="button" class="btn btn-danger">ATTACK!</button>
+    </div>
+    <div class="col-md-3" id="fighter">
+      <h2>Your Enemy</h2>
+      <div class="row">
+        <div class="col p-5">
+          <img src="https://via.placeholder.com/250x250" class="img-thumbnail" />
+          <h5 id="enemyName">Placeholder Text</h5>
+          <p id="enemyHP">HP: </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script src="assets/javascript/game.js"></script>
+
+</html>
