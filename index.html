@@ -17,29 +17,46 @@
 </head>
 
 <body>
-  <div class="jumbotron text-center">
+  <div class="jumbotron text-center pb-1">
     <h1>Destroy the World's Worst Leaders!</h1>
+    <br>
+    <div class="row">
+      <div class="col-md-3 offset-md-4">
+        <h5>VICTORIES</h5>
+      </div>
+      <div class="col-md-3 offset-md-2">
+        <h5>DEFEATS</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 offset-md-4">
+        <h5 id="victories"></h5>
+      </div>
+      <div class="col-md-3 offset-md-2">
+        <h5 id="defeats"></h5>
+      </div>
+    </div>
   </div>
   <div class="row text-center">
     <div class="col-md-4" id="fighters">
       <h2 id="fighterSelectText">Select Your Fighter</h2>
       <div class="row">
         <div class="col-md-6 char" id="trudeau">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/trudeau.jpg" class="img-thumbnail" />
           <h5>Justin Trudeau</h5>
         </div>
         <div class="col-md-6 char" id="obama">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/obama.jpg" class="img-thumbnail" />
           <h5>Barrack Obama</h5>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 char" id="macron">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/macron.jpg" class="img-thumbnail" />
           <h5>Emmanuel Macron</h5>
         </div>
         <div class="col-md-6 char" id="merkel">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/merkel.jpg" class="img-thumbnail" />
           <h5>Angela Merkel</h5>
         </div>
       </div>
@@ -48,21 +65,21 @@
       <h2 id="enemySelectText">Select Your Enemy</h2>
       <div class="row">
         <div class="col-md-6 char" id="trump">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/trump.jpg" class="img-thumbnail" />
           <h5>Donald Trump</h5>
         </div>
         <div class="col-md-6 char" id="putin">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
-          <h5>Vladmir Putin</h5>
+          <img src="assets/images/putin.jpg" class="img-thumbnail" />
+          <h5>Vladimir Putin</h5>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 char" id="kim">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/kim.jpg" class="img-thumbnail" />
           <h5>Kim Jung-Un</h5>
         </div>
         <div class="col-md-6 char" id="hitler">
-          <img src="https://via.placeholder.com/150x150" class="img-thumbnail" />
+          <img src="assets/images/hitler.jpg" class="img-thumbnail" />
           <h5>Adolf Hitler</h5>
         </div>
       </div>
@@ -89,7 +106,7 @@
       <h2>Your Enemy</h2>
       <div class="row">
         <div class="col p-5" id="enemy">
-          <img src="https://via.placeholder.com/250x250" class="img-thumbnail" />
+          <img src="https://via.placeholder.com/250x250" class="img-thumbnail" id="enemyImage" />
           <h5 id="enemyName">Placeholder Text</h5>
           <p id="enemyHP"></p>
         </div>

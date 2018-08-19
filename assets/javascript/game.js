@@ -14,21 +14,25 @@ $(document).ready(function () {
       name: 'Justin Trudeau',
       hp: rand(160, 100),
       ap: rand(10, 2),
+      img: 'assets/images/trudeau.jpg'
     },
     {
       name: 'Barrack Obama',
       hp: rand(200, 100),
       ap: rand(10, 2),
+      img: 'assets/images/obama.jpg'
     },
     {
       name: 'Emmanuel Macron',
       hp: rand(140, 100),
       ap: rand(10, 2),
+      img: 'assets/images/macron.jpg'
     },
     {
       name: 'Angela Merkel',
       hp: rand(180, 100),
       ap: rand(10, 2),
+      img: 'assets/images/merkel.jpg'
     }
   ];
 
@@ -41,22 +45,26 @@ $(document).ready(function () {
     {
       name: 'Donald Trump',
       hp: rand(120, 90),
-      cap: rand(25, 1)
+      cap: rand(25, 1),
+      img: 'assets/images/trump.jpg'
     },
     {
       name: 'Kim Jung-Un',
       hp: rand(150, 90),
-      cap: rand(25, 1)
+      cap: rand(25, 1),
+      img: 'assets/images/kim.jpg'
     },
     {
       name: 'Vladmir Putin',
       hp: rand(140, 90),
-      cap: rand(25, 1)
+      cap: rand(25, 1),
+      img: 'assets/images/putin.jpg'
     },
     {
       name: 'Adolf Hitler',
       hp: rand(130, 90),
-      cap: rand(25, 1)
+      cap: rand(25, 1),
+      img: 'assets/images/hitler.jpg'
     }
   ];
 
@@ -64,6 +72,9 @@ $(document).ready(function () {
   const kim = enemies[1];
   const putin = enemies[2];
   const hitler = enemies[3];
+
+  let victories = 0;
+  let defeats = 0;
 
   let getCharacter = function (x) {
     if (x === 'trump') {
@@ -89,6 +100,10 @@ $(document).ready(function () {
 
   let currentFighter = {};
   let currentEnemy = {};
+
+  $('#victories').text(victories);
+  $('#defeats').text(defeats);
+
 
   let attack = function () {
     currentEnemy.hp = currentEnemy.hp - currentFighter.ap * attackNum;
@@ -118,11 +133,13 @@ $(document).ready(function () {
       $("#fighters").hide();
       $("#enemies, #fighter").show();
       currentFighter = char;
+      $("#fighterImage").attr('src', char.img);
       $("#fighterHP").text('Health = ' + currentFighter.hp);
     } else {
-      $("#enemyName").text(getCharacter(elmId).name);
+      $("#enemyName").text(char.name);
       currentEnemy = char;
       $("#enemy").show();
+      $("#enemyImage").attr('src', char.img);
       $("#enemyHP").text('Health = ' + currentEnemy.hp);
       $(".message1, .message2").empty();
       $(document).on('click', '#attackBtn', attack);
@@ -146,6 +163,7 @@ $(document).ready(function () {
     if (currentFighter.hp <= 0) {
       $(".message1").text('You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
       $(".message2").text('');
+      defeats--;
       $(document).off('click', '#attackBtn', attack);
     }
   }
@@ -157,6 +175,7 @@ $(document).ready(function () {
 
   let checkWin = function () {
     if (defeated === 4) {
+      victories++;
       $(".message1").text('Congratulations! You have defeated all of your enemies.')
       $(".message2").text('')
       $("#attackBtn").hide();
@@ -194,7 +213,7 @@ When the defender's HP is reduced to zero or below, remove the enemy from the de
 
 
 
-The player wins the game by defeating all enemy enemies.The player loses the game the game if their character's HP falls to zero or below.
+The player victories the game by defeating all enemy enemies.The player loses the game the game if their character's HP falls to zero or below.
 
 
 
