@@ -7,27 +7,27 @@ $(document).ready(function () {
     return num;
   }
 
-  $("#enemies").hide();
+  $("#enemies, #fighter, #enemy").hide();
 
   const fighters = [
     {
       name: 'Justin Trudeau',
-      hp: rand(130, 100),
-      ap: rand(10, 1),
+      hp: rand(160, 100),
+      ap: rand(10, 2),
     },
     {
       name: 'Barrack Obama',
-      hp: rand(150, 100),
+      hp: rand(200, 100),
       ap: rand(10, 2),
     },
     {
       name: 'Emmanuel Macron',
-      hp: rand(120, 100),
+      hp: rand(140, 100),
       ap: rand(10, 2),
     },
     {
       name: 'Angela Merkel',
-      hp: rand(140, 100),
+      hp: rand(180, 100),
       ap: rand(10, 2),
     }
   ];
@@ -40,7 +40,7 @@ $(document).ready(function () {
   const enemies = [
     {
       name: 'Donald Trump',
-      hp: rand(135, 90),
+      hp: rand(120, 90),
       cap: rand(25, 1)
     },
     {
@@ -50,12 +50,12 @@ $(document).ready(function () {
     },
     {
       name: 'Vladmir Putin',
-      hp: rand(120, 90),
+      hp: rand(140, 90),
       cap: rand(25, 1)
     },
     {
       name: 'Adolf Hitler',
-      hp: rand(115, 90),
+      hp: rand(130, 90),
       cap: rand(25, 1)
     }
   ];
@@ -90,6 +90,25 @@ $(document).ready(function () {
   let currentFighter = {};
   let currentEnemy = {};
 
+  let attack = function () {
+    currentEnemy.hp = currentEnemy.hp - currentFighter.ap * attackNum;
+    $("#enemyHP").text('Health = ' + currentEnemy.hp);
+    checkEnemyHealth();
+    checkWin();
+    if (defeated !== 4) {
+      if (currentEnemy.hp > 0) {
+        currentFighter.hp = currentFighter.hp - currentEnemy.cap;
+        checkFighterHealth();
+        console.log(attackNum);
+        $("#fighterHP").text('Health = ' + currentFighter.hp);
+        $(".message1").text('Attack inflicted: ' + (currentFighter.ap * attackNum) + ' damage.');
+        $(".message2").text('Counter attack inflicted ' + (currentEnemy.cap) + ' damage.');
+        attackNum++;
+      }
+    }
+
+  }
+
   let selector = function () {
     let elmId = $(this).attr("id");
     let char = getCharacter(elmId);
@@ -97,44 +116,54 @@ $(document).ready(function () {
       $("#fighterName").text(char.name);
       $("#fighterSelectText").text('Select Your Enemy');
       $("#fighters").hide();
-      $("#enemies").show();
+      $("#enemies, #fighter").show();
       currentFighter = char;
       $("#fighterHP").text('Health = ' + currentFighter.hp);
     } else {
       $("#enemyName").text(getCharacter(elmId).name);
       currentEnemy = char;
+      $("#enemy").show();
       $("#enemyHP").text('Health = ' + currentEnemy.hp);
+      $(".message1, .message2").empty();
+      $(document).on('click', '#attackBtn', attack);
     }
     $(this).empty();
+
   }
 
   let attackNum = 1;
+  let defeated = 0;
 
-  let checkHealth = function (a) {
-    console.log('checkHealth is running');
-    console.log(a);
-    console.log('currentEnemy.hp = ' + a.hp)
-    if (a.hp <= 0) {
-      eDefeated(a);
+  let checkEnemyHealth = function () {
+    if (currentEnemy.hp <= 0) {
+      eDefeated(currentEnemy);
+      defeated++;
+      $(document).off('click', '#attackBtn', attack);
+    }
+  }
+
+  let checkFighterHealth = function () {
+    if (currentFighter.hp <= 0) {
+      $(".message1").text('You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
+      $(".message2").text('');
+      $(document).off('click', '#attackBtn', attack);
     }
   }
 
   let eDefeated = function (b) {
-    $(".message").append('<strong>Congratulations! You have defeated ' + b.name + '.<br><br> Select your next enemy.<br><-----</strong>');
+    $(".message1").text('Congratulations! You have defeated ' + b.name + '.')
+    $(".message2").text('Select your next enemy.');
   }
 
-  let attack = function () {
-    currentEnemy.hp = currentEnemy.hp - currentFighter.ap * attackNum;
-    currentFighter.hp = currentFighter.hp - currentEnemy.cap;
-    $("#fighterHP").text('Health = ' + currentFighter.hp);
-    $("#enemyHP").text('Health = ' + currentEnemy.hp);
-    attackNum++;
-    checkHealth(currentEnemy);
+  let checkWin = function () {
+    if (defeated === 4) {
+      $(".message1").text('Congratulations! You have defeated all of your enemies.')
+      $(".message2").text('')
+      $("#attackBtn").hide();
+    }
   }
 
   $(document).on('click', '.char', selector)
-
-    .on('click', '#attackBtn', attack);
 
 })
 
