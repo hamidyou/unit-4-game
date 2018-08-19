@@ -1,0 +1,21 @@
+.jumbotron {
+  margin: 0px;
+  background-color: #708c98;
+  border: 5px solid black;
+  border-radius: 0px; 
+}
+
+.main {
+  background-image: url('https://i.imgur.com/DMqejBN.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  padding-top: 2rem;
+  text-shadow: 2px 2px black
+}
+
+.message1 {
+  color: black;
+  text-shadow: 0px 0px;
+}
+

@@ -113,12 +113,14 @@ $(document).ready(function () {
     if (defeated !== 4) {
       if (currentEnemy.hp > 0) {
         currentFighter.hp = currentFighter.hp - currentEnemy.cap;
-        checkFighterHealth();
-        console.log(attackNum);
-        $("#fighterHP").text('Health = ' + currentFighter.hp);
-        $(".message1").text('Attack inflicted: ' + (currentFighter.ap * attackNum) + ' damage.');
-        $(".message2").text('Counter attack inflicted ' + (currentEnemy.cap) + ' damage.');
-        attackNum++;
+        if (currentFighter.hp <= 0) {
+          checkFighterHealth();
+        } else {
+          $("#fighterHP").text('Health = ' + currentFighter.hp);
+          $(".message1").text('Attack inflicted: ' + (currentFighter.ap * attackNum) + ' damage.');
+          $(".message2").text('Counter attack inflicted ' + (currentEnemy.cap) + ' damage.');
+          attackNum++;
+        }
       }
     }
 
@@ -136,7 +138,7 @@ $(document).ready(function () {
       $("#fighterImage").attr('src', char.img);
       $("#fighterHP").text('Health = ' + currentFighter.hp);
     } else {
-      $("#enemyName").text(char.name);
+      $("#enemyName").text(getCharacter(elmId).name);
       currentEnemy = char;
       $("#enemy").show();
       $("#enemyImage").attr('src', char.img);
@@ -163,12 +165,14 @@ $(document).ready(function () {
     if (currentFighter.hp <= 0) {
       $(".message1").text('You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
       $(".message2").text('');
+      $("#fighterHP").text('Health = 0');
       defeats--;
       $(document).off('click', '#attackBtn', attack);
     }
   }
 
   let eDefeated = function (b) {
+    $("#enemyHP").text('Health = 0');
     $(".message1").text('Congratulations! You have defeated ' + b.name + '.')
     $(".message2").text('Select your next enemy.');
   }
