@@ -7,7 +7,27 @@ $(document).ready(function () {
     return num;
   }
 
-  $("#enemies, #fighter, #enemy").hide();
+  let currentFighter = {};
+  let currentEnemy = {};
+  let victories = 0;
+  let defeats = 0;
+  let attackNumber = 1;
+  let defeated = 0;
+  let enemySelected = false;
+
+  let updateResults = function () {
+    $('#victories').text(victories);
+    $('#defeats').text(defeats);
+  }
+
+  let initialize = function () {
+    $("#enemies, #fighter, #enemy").hide();
+    attackNumber = 1;
+    defeated = 0;
+    updateResults();
+  }
+
+  initialize();
 
   const fighters = [
     {
@@ -73,8 +93,7 @@ $(document).ready(function () {
   const putin = enemies[2];
   const hitler = enemies[3];
 
-  let victories = 0;
-  let defeats = 0;
+
 
   let getCharacter = function (x) {
     if (x === 'trump') {
@@ -96,79 +115,91 @@ $(document).ready(function () {
     }
   }
 
-  let selText = $('#fighterSelectText');
+  const $selText = $('#fighterSelectText');
+  const $enemyHealth = $("#enemyHP");
+  const $fighterHealth = $("#fighterHP");
+  const $message1 = $(".message1");
+  const $message2 = $(".message2");
 
-  let currentFighter = {};
-  let currentEnemy = {};
-
-  $('#victories').text(victories);
-  $('#defeats').text(defeats);
-
-
-  let attack = function () {
-    currentEnemy.hp = currentEnemy.hp - currentFighter.ap * attackNum;
-    $("#enemyHP").text('Health = ' + currentEnemy.hp);
-    checkEnemyHealth();
-    checkWin();
-    if (defeated !== 4) {
-      if (currentEnemy.hp > 0) {
-        currentFighter.hp = currentFighter.hp - currentEnemy.cap;
-        if (currentFighter.hp <= 0) {
-          checkFighterHealth();
-        } else {
-          $("#fighterHP").text('Health = ' + currentFighter.hp);
-          $(".message1").text('Attack inflicted: ' + (currentFighter.ap * attackNum) + ' damage.');
-          $(".message2").text('Counter attack inflicted ' + (currentEnemy.cap) + ' damage.');
-          attackNum++;
-        }
-      }
-    }
-
+  let updateAfterAttack = function () {
+    $fighterHealth.text('Health = ' + currentFighter.hp);
+    $message1.text('Attack inflicted: ' + (currentFighter.ap * attackNumber) + ' damage.');
+    $message2.text('Counter attack inflicted ' + (currentEnemy.cap) + ' damage.');
   }
 
-  let selector = function () {
-    let elmId = $(this).attr("id");
-    let char = getCharacter(elmId);
-    if (selText.text() === 'Select Your Fighter') {
-      $("#fighterName").text(char.name);
-      $("#fighterSelectText").text('Select Your Enemy');
-      $("#fighters").hide();
-      $("#enemies, #fighter").show();
-      currentFighter = char;
-      $("#fighterImage").attr('src', char.img);
-      $("#fighterHP").text('Health = ' + currentFighter.hp);
-    } else {
-      $("#enemyName").text(getCharacter(elmId).name);
-      currentEnemy = char;
-      $("#enemy").show();
-      $("#enemyImage").attr('src', char.img);
-      $("#enemyHP").text('Health = ' + currentEnemy.hp);
-      $(".message1, .message2").empty();
-      $(document).on('click', '#attackBtn', attack);
-    }
-    $(this).empty();
-
+  let getEnemyHealth = function () {
+    currentEnemy.hp = currentEnemy.hp - currentFighter.ap * attackNumber;
+    $enemyHealth.text('Health = ' + currentEnemy.hp);
   }
-
-  let attackNum = 1;
-  let defeated = 0;
 
   let checkEnemyHealth = function () {
-    if (currentEnemy.hp <= 0) {
-      eDefeated(currentEnemy);
-      defeated++;
-      $(document).off('click', '#attackBtn', attack);
-    }
+    return currentEnemy.hp <= 0;
+  }
+
+  let enemyDefeated = function () {
+    eDefeated(currentEnemy);
+    defeated++;
+    $(document).off('click', '#attackBtn', attack);
+  }
+
+  let getFighterHealth = function () {
+    currentFighter.hp = currentFighter.hp - currentEnemy.cap;
   }
 
   let checkFighterHealth = function () {
-    if (currentFighter.hp <= 0) {
-      $(".message1").text('You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
-      $(".message2").text('');
-      $("#fighterHP").text('Health = 0');
-      defeats--;
-      $(document).off('click', '#attackBtn', attack);
+    return currentFighter.hp <= 0;
+  }
+
+  let fighterDefeated = function () {
+    $(".message1").text('You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
+    $(".message2").text('');
+    $("#fighterHP").text('Health = 0');
+    defeats--;
+    updateResults();
+    $(document).off('click', '#attackBtn', attack);
+  }
+
+  let attack = function () {
+    getEnemyHealth();
+    if (checkEnemyHealth()) {
+      enemyDefeated();
+      enemySelected = false;
+      checkWin();
+    } else {
+      getFighterHealth();
+      checkFighterHealth();
+      if (!checkFighterHealth()) {
+        updateAfterAttack();
+        attackNumber++;
+      }
     }
+  }
+
+  let selector = function () {
+    if (!enemySelected) {
+      let elmId = $(this).attr("id");
+      let char = getCharacter(elmId);
+      if ($selText.text() === 'Select Your Fighter') {
+        $("#fighterName").text(char.name);
+        $("#fighterSelectText").text('Select Your Enemy');
+        $("#fighters").hide();
+        $("#enemies, #fighter").show();
+        currentFighter = char;
+        $("#fighterImage").attr('src', char.img);
+        $("#fighterHP").text('Health = ' + currentFighter.hp);
+      } else {
+        $("#enemyName").text(getCharacter(elmId).name);
+        currentEnemy = char;
+        $("#enemy").show();
+        $("#enemyImage").attr('src', char.img);
+        $("#enemyHP").text('Health = ' + currentEnemy.hp);
+        $(".message1, .message2").empty();
+        enemySelected = true;
+        $(document).on('click', '#attackBtn', attack);
+      }
+      $(this).empty();
+    }
+
   }
 
   let eDefeated = function (b) {
@@ -180,6 +211,7 @@ $(document).ready(function () {
   let checkWin = function () {
     if (defeated === 4) {
       victories++;
+      updateResults();
       $(".message1").text('Congratulations! You have defeated all of your enemies.')
       $(".message2").text('')
       $("#attackBtn").hide();
@@ -187,9 +219,7 @@ $(document).ready(function () {
   }
 
   $(document).on('click', '.char', selector)
-
 })
-
 
 /*
 
