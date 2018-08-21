@@ -7,6 +7,33 @@ $(document).ready(function () {
     return num;
   }
 
+  const $selText = $('#fighterSelectText');
+  const $enemyHealth = $("#enemyHP");
+  const $fighterHealth = $("#fighterHP");
+  const $message1 = $(".message1");
+  const $message2 = $(".message2");
+  const $fighterName = $("#fighterName");
+  const $fighters = $("#fighters");
+  const $enemies = $("#enemies");
+  const $fighter = $("#fighter");
+  const $fighterImage = $("#fighterImage");
+  const $fighterHP = $("#fighterHP");
+  const $enemyName = $("#enemyName");
+  const $enemy = $("#enemy");
+  const $enemyImage = $("#enemyImage");
+  const $enemyHP = $("#enemyHP");
+  const $attackBtn = $("#attackBtn");
+  const $restart = $('#restart');
+  const $victories = $('#victories');
+  const $defeats = $('#defeats');
+  const $trudeau = $('#trudeau');
+  const $obama = $('#obama');
+  const $macron = $('#macron');
+  const $merkel = $('#merkel');
+  const $trump = $('#trump');
+  const $putin = $('#putin');
+  const $kim = $('#kim');
+  const $hitler = $('#hitler');
   let currentFighter = {};
   let currentEnemy = {};
   let victories = 0;
@@ -14,11 +41,6 @@ $(document).ready(function () {
   let attackNumber = 1;
   let defeated = 0;
   let enemySelected = false;
-  const $selText = $('#fighterSelectText');
-  const $enemyHealth = $("#enemyHP");
-  const $fighterHealth = $("#fighterHP");
-  const $message1 = $(".message1");
-  const $message2 = $(".message2");
 
   let initializeCharacters = function () {
     fighters = [
@@ -87,58 +109,32 @@ $(document).ready(function () {
 
   }
 
-  // let fightersFunction = function (name, img, hpRange, apRange) {
-  //   this.name = name;
-  //   this.img = img;
-  //   this.hp = rand(hpRange[0], hpRange[1]);
-  //   this.ap = rand(apRange[0], apRange[1]);
-  // };
-
-  // let fighters = [['Justin Trudeau', 'assets/images/trudeau.jpg', [160, 100], [10, 2]], 
-  //   ['Barrack Obama', 'assets/images/obama.jpg', [200, 100], [10, 2]]]
-
-  // // let fighterVariables = ['trudeau', 'obama', 'macron', 'merkel'];
-
-  // let fighterVariables = new fightersFunction(fighters[0], fighters[1], fighters[2], fighters[3];
-
-  // let TEST = [];
-
-  // for (let i = 0; i < fighters.length; i++) {
-  //   let fighter = new fightersFunction(fighters[i][0], fighters[i][1], fighters[i][2], fighters[i][3];
-  //   TEST.push(fighter);
-  // }
-
-  // let fighters = [
-  //   {
-  //     name: 'Justin Trudeau',
-  //     hp: rand(160, 100),
-  //     ap: rand(10, 2),
-  //     img: 'assets/images/trudeau.jpg'
-  //   },
-  //   {
-  //     name: 'Barrack Obama',
-  //     hp: rand(200, 100),
-  //     ap: rand(10, 2),
-  //     img: 'assets/images/obama.jpg'
-  //   },
-  //   {
-  //     name: 'Emmanuel Macron',
-  //     hp: rand(140, 100),
-  //     ap: rand(10, 2),
-  //     img: 'assets/images/macron.jpg'
-  //   },
-  //   {
-  //     name: 'Angela Merkel',
-  //     hp: rand(180, 100),
-  //     ap: rand(10, 2),
-  //     img: 'assets/images/merkel.jpg'
-  //   }
-  // ];
-
-  let trudeau = fighters[0];
-  let obama = fighters[1];
-  let macron = fighters[2];
-  let merkel = fighters[3];
+  let fighters = [
+    {
+      name: 'Justin Trudeau',
+      hp: rand(160, 100),
+      ap: rand(10, 2),
+      img: 'assets/images/trudeau.jpg'
+    },
+    {
+      name: 'Barrack Obama',
+      hp: rand(200, 100),
+      ap: rand(10, 2),
+      img: 'assets/images/obama.jpg'
+    },
+    {
+      name: 'Emmanuel Macron',
+      hp: rand(140, 100),
+      ap: rand(10, 2),
+      img: 'assets/images/macron.jpg'
+    },
+    {
+      name: 'Angela Merkel',
+      hp: rand(180, 100),
+      ap: rand(10, 2),
+      img: 'assets/images/merkel.jpg'
+    }
+  ];
 
   let enemies = [
     {
@@ -167,25 +163,39 @@ $(document).ready(function () {
     }
   ];
 
+  let trudeau = fighters[0];
+  let obama = fighters[1];
+  let macron = fighters[2];
+  let merkel = fighters[3];
   let trump = enemies[0];
   let kim = enemies[1];
   let putin = enemies[2];
   let hitler = enemies[3];
 
-
   let updateResults = function () {
-    $('#victories').text(victories);
-    $('#defeats').text(defeats);
+    $victories.text(victories);
+    $defeats.text(defeats);
   }
 
   let initialize = function () {
-    $("#enemies, #fighter, #enemy, #restart").hide();
-    $("#fighters, #trudeau, #obama, #macron, #merkel, #trump, #putin, #kim, #hitler").show();
+    $enemies.hide();
+    $fighter.hide();
+    $enemy.hide();
+    $restart.hide();
+    $fighters.show();
+    $trudeau.show();
+    $obama.show();
+    $macron.show();
+    $merkel.show();
+    $trump.show();
+    $putin.show();
+    $kim.show();
+    $hitler.show();
     attackNumber = 1;
     defeated = 0;
     enemySelected = false;
-    $($selText).text('Select Your Fighter');
-    $('#attackBtn').show();
+    $selText.text('Select Your Fighter');
+    $attackBtn.show();
     updateResults();
     initializeCharacters();
     $('.message1, .message2').text("");
@@ -224,9 +234,7 @@ $(document).ready(function () {
     $enemyHealth.text('Health = ' + currentEnemy.hp);
   }
 
-  let checkEnemyHealth = function () {
-    return currentEnemy.hp <= 0;
-  }
+  let checkEnemyHealth = () => currentEnemy.hp <= 0;
 
   let enemyDefeated = function () {
     eDefeated(currentEnemy);
@@ -234,23 +242,27 @@ $(document).ready(function () {
     $(document).off('click', '#attackBtn', attack);
   }
 
-  let getFighterHealth = function () {
-    currentFighter.hp = currentFighter.hp - currentEnemy.cap;
-  }
+  let getFighterHealth = () => currentFighter.hp = currentFighter.hp - currentEnemy.cap;
 
-  let checkFighterHealth = function () {
-    return currentFighter.hp <= 0;
-  }
+  let checkFighterHealth = () => currentFighter.hp <= 0;
+
+  let updateElementText = (elm, str) => $(elm).text(str);
+  let getAttributeValues = (elm, att) => $(elm).attr(att);
+  let setAttributeValues = (elm, attr, value) => $(elm).attr(attr, value);
+  let show = (elm) => $(elm).show();
+  let hide = (elm) => $(elm).hide();
+  let getElementText = (elm) => $(elm).text();
+
 
   let fighterDefeated = function () {
-    $(".message1").text('You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
-    $(".message2").text('');
-    $("#fighterHP").text('Health = 0');
+    updateElementText($message1, 'You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
+    updateElementText($message2, '');
+    updateElementText($fighterHP, 'Health = 0');
     defeats++;
     updateResults();
     $(document).off('click', '#attackBtn', attack);
-    $('#attackBtn').hide();
-    $('#restart').show();
+    hide($attackBtn);
+    show($restart);
   }
 
   let attack = function () {
@@ -271,31 +283,37 @@ $(document).ready(function () {
     }
   }
 
-  let textUpdate = function (elm, str) {
-    $(elm).text(str);
+  let selectFighter = function (a) {
+    updateElementText($fighterName, a.name);
+    updateElementText($selText, 'Select Your Enemy');
+    hide($fighters);
+    show($enemies);
+    show($fighter);
+    currentFighter = a;
+    setAttributeValues($fighterImage, 'src', a.img);
+    updateElementText($fighterHP, 'Health = ' + currentFighter.hp)
+  }
+
+  let selectEnemy = function (a) {
+    updateElementText($enemyName, getCharacter(a).name);
+    currentEnemy = a;
+    show($enemy);
+    setAttributeValues($enemyImage, 'src', a.img);
+    updateElementText($enemyHP, 'Health = ' + currentEnemy.hp)
+    $message1.empty();
+    $message2.empty();
+    enemySelected = true;
+    $(document).on('click', '#attackBtn', attack);
   }
 
   let selector = function () {
     if (!enemySelected) {
-      let elmId = $(this).attr("id");
+      let elmId = getAttributeValues(this, 'id');
       let char = getCharacter(elmId);
-      if ($selText.text() === 'Select Your Fighter') {
-        $("#fighterName").text(char.name);
-        $($selText).text('Select Your Enemy');
-        $("#fighters").hide();
-        $("#enemies, #fighter").show();
-        currentFighter = char;
-        $("#fighterImage").attr('src', char.img);
-        $("#fighterHP").text('Health = ' + currentFighter.hp);
+      if (getElementText($selText) === 'Select Your Fighter') {
+        selectFighter(char);
       } else {
-        $("#enemyName").text(getCharacter(elmId).name);
-        currentEnemy = char;
-        $("#enemy").show();
-        $("#enemyImage").attr('src', char.img);
-        $("#enemyHP").text('Health = ' + currentEnemy.hp);
-        $(".message1, .message2").empty();
-        enemySelected = true;
-        $(document).on('click', '#attackBtn', attack);
+        selectEnemy(char);
       }
       $(this).hide();
     }
@@ -303,19 +321,19 @@ $(document).ready(function () {
   }
 
   let eDefeated = function (b) {
-    $("#enemyHP").text('Health = 0');
-    $(".message1").text('Congratulations! You have defeated ' + b.name + '.')
-    $(".message2").text('Select your next enemy.');
+    $enemyHP.text('Health = 0');
+    $message1.text('Congratulations! You have defeated ' + b.name + '.')
+    $message2.text('Select your next enemy.');
   }
 
   let checkWin = function () {
     if (defeated === 4) {
       victories++;
       updateResults();
-      $(".message1").text('Congratulations! You have defeated all of your enemies.')
-      $(".message2").text('')
-      $("#attackBtn").hide();
-      $('#restart').show();
+      $message1.text('Congratulations! You have defeated all of your enemies.')
+      $message2.text('')
+      $attackBtn.hide();
+      $restart.show();
     }
   }
 
