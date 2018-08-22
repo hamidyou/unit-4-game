@@ -242,7 +242,7 @@ $(document).ready(function () {
     $(document).off('click', '#attackBtn', attack);
   }
 
-  let getFighterHealth = () => currentFighter.hp = currentFighter.hp - currentEnemy.cap;
+  let getFighterHealth = (a) => a.hp = a.hp - currentEnemy.cap;
 
   let checkFighterHealth = () => currentFighter.hp <= 0;
 
@@ -252,7 +252,6 @@ $(document).ready(function () {
   let show = (elm) => $(elm).show();
   let hide = (elm) => $(elm).hide();
   let getElementText = (elm) => $(elm).text();
-
 
   let fighterDefeated = function () {
     updateElementText($message1, 'You have been defeated by ' + currentEnemy.name + '. Better luck next time.')
@@ -272,7 +271,7 @@ $(document).ready(function () {
       enemySelected = false;
       checkWin();
     } else {
-      getFighterHealth();
+      getFighterHealth(currentFighter);
       checkFighterHealth();
       if (!checkFighterHealth()) {
         updateAfterAttack();
@@ -295,7 +294,7 @@ $(document).ready(function () {
   }
 
   let selectEnemy = function (a) {
-    updateElementText($enemyName, getCharacter(a).name);
+    updateElementText($enemyName, a.name);
     currentEnemy = a;
     show($enemy);
     setAttributeValues($enemyImage, 'src', a.img);
